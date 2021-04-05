@@ -1,5 +1,12 @@
+var controles = null;
+var reservas = null;
 let data = new Date()
 let horario = Date.now()
+
+if (controles == null) {
+  var response = require('./dados2.json')
+  console.log(response.controles[0].act22)
+}
 
 // Primeira consulta 7:40
 // Ligamento 07:50
