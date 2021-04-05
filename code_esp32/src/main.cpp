@@ -1,23 +1,40 @@
 // An IR LED must be connected to Arduino PWM pin 3.
 // On esp pin 4
-#include "WiFi.h"
-#include "ESPAsyncWebServer.h"
-#include <IRremote.h>
-#include <iostream>
-#include <sstream>
+#include "WiFi.h"               // Biblioteca Wifi
+#include "ESPAsyncWebServer.h"  // Biblioteca WebServer
+#include <IRremote.h>           // Biblioteca Infravermelho
+#include <iostream>             // Manipulação de dados
+#include <sstream>              // Manipulação de dados
+#include <MFRC522.h>            // RFID
+#include <SPI.h>                //RFID
+
+#define SS_PIN    21
+#define RST_PIN   22
+
+#define SIZE_BUFFER     18
+#define MAX_SIZE_BLOCK  16
 
 // Credenciais para acesso a rede wifi
-const char* ssid = "irwin";
-const char* password = "irwintrena5m";
+// const char* ssid = "irwin";
+// const char* password = "irwintrena5m";
+const char* ssid = "1704A";
+const char* password = "casa1704a";
 
 AsyncWebServer server(80);
 String command;
 String lenCommand;
 String mac;
+bool presence = false;
+
+MFRC522::MIFARE_Key key;              //esse objeto 'chave' é utilizado para autenticação
+MFRC522::StatusCode status;           //código de status de retorno da autenticação
+MFRC522 mfrc522(SS_PIN, RST_PIN);     // Definicoes pino modulo RC522
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(115200);
+
+  mfrc522.PCD_Init(); // Inicia MFRC522
 
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -62,4 +79,19 @@ void setup() {
   server.begin();
 }
 
-void loop() {}
+void loop() {
+  if (mfrc522.PICC_IsNewCardPresent()) {
+    if(presence == true) {
+      return;
+    } else {
+      presence = true;
+    }
+  } else {
+    if(presence == false) {
+      return;
+    } else {
+      presence = false;
+    }
+  }
+  delay(2000);
+}
