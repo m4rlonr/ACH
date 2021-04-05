@@ -1,3 +1,4 @@
+// Onde conectar o lino do led
 // An IR LED must be connected to Arduino PWM pin 3.
 // On esp pin 4
 #include "WiFi.h"               // Biblioteca Wifi
@@ -8,11 +9,11 @@
 #include <MFRC522.h>            // RFID
 #include <SPI.h>                //RFID
 
-#define SS_PIN    21
-#define RST_PIN   22
+#define SS_PIN    21            // Pino RFID
+#define RST_PIN   22            // Pino RFID
 
-#define SIZE_BUFFER     18
-#define MAX_SIZE_BLOCK  16
+#define SIZE_BUFFER     18      // Dados RFID
+#define MAX_SIZE_BLOCK  16      // Dados RFID
 
 // Credenciais para acesso a rede wifi
 // const char* ssid = "irwin";
