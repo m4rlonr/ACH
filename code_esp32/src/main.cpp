@@ -25,15 +25,17 @@ AsyncWebServer server(80);
 String command;
 String lenCommand;
 String mac;
-bool presence = false;
+String presence = "false";
 
-MFRC522::MIFARE_Key key;              //esse objeto 'chave' é utilizado para autenticação
-MFRC522::StatusCode status;           //código de status de retorno da autenticação
+// MFRC522::MIFARE_Key key;              //esse objeto 'chave' é utilizado para autenticação
+// MFRC522::StatusCode status;           //código de status de retorno da autenticação
 MFRC522 mfrc522(SS_PIN, RST_PIN);     // Definicoes pino modulo RC522
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(115200);
+
+  pinMode(14, OUTPUT); //TESTE
 
   mfrc522.PCD_Init(); // Inicia MFRC522
 
@@ -49,6 +51,9 @@ void setup() {
 
   server.on("/check", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", mac.c_str());
+  });
+  server.on("/presence", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send_P(200, "text/plain", presence.c_str());
   });
   server.on("/emissor", HTTP_POST, [](AsyncWebServerRequest *request) {
     int params = request->params();
@@ -81,18 +86,12 @@ void setup() {
 }
 
 void loop() {
+  // IMPORTANTE NÃO TER DELAY
   if (mfrc522.PICC_IsNewCardPresent()) {
-    if(presence == true) {
-      return;
-    } else {
-      presence = true;
-    }
+    digitalWrite(14, HIGH);
+    presence = "true";
   } else {
-    if(presence == false) {
-      return;
-    } else {
-      presence = false;
-    }
+    digitalWrite(14, LOW);
+    presence = "false";
   }
-  delay(2000);
 }
