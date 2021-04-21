@@ -23,3 +23,10 @@
       "ipesp": null,
       "presence" : false
     }
+
+
+### Trabalhar em:
+1. Terminar o dialog de controle remoto
+1. Terminar o dialog de configuração individual
+1. Gravar dados de variavies em um arquivo locas "controles e salas"
+1. Criar dialogs de cadatros
