@@ -1,15 +1,25 @@
-Mapa de horarios
-Primeira consulta 7:40
-Ligamento 07:50
-Desligamento se não tiver presença 8:10
-Desligamento 11:10
-----------------------------------------------
-Segunda consulta 12:40
-Ligamento 12:50
-Desligamento se não tiver presença 13:10
-Desligamento 17:10
-----------------------------------------------
-Terceira consulta 18:40
-Ligamento 18:50
-Desligamento se não tiver presença 19:10
-Desligamento 23:10
+# Rascunho de dados de controles
+
+    {
+      "nome": "nome_do_modelo",
+      "id": 0,
+      "length": comprimento_dos_comandos,
+      "comandos": [  
+        "comando_off"
+        "comando_22" 
+        "comando_23" 
+        "comando_24"
+        "comando_25"
+        "comando_26"
+      ]
+    }
+
+# Rascunho de dados de salas
+
+    {
+      "nome": "b1",
+      "id": 2,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    }

@@ -1,0 +1,72 @@
+[
+    {
+      "nome": "a1",
+      "id": 0,
+      "tipoar": ["springer", "elgin"],
+      "ipesp": "",
+      "presence" : false
+    },
+    {
+      "nome": "a2",
+      "id": 1,
+      "tipoar": ["springer", "samsung"],
+      "ipesp": null,
+      "presence" : false
+    },
+    {
+      "nome": "b1",
+      "id": 2,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    },
+    {
+      "nome":"b2",
+      "id": 3,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    },
+    {
+      "nome": "b3",
+      "id": 4,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    },
+    {
+      "nome": "b4",
+      "id": 5,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    },
+    {
+      "nome": "b5",
+      "id": 6,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    },
+    {
+      "nome" :"b6",
+      "id": 7,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    },
+    {
+      "nome": "b7",
+      "id": 8,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    },
+    {
+      "nome": "b8",
+      "id": 9,
+      "tipoar": [],
+      "ipesp": null,
+      "presence" : false
+    }
+  ]
