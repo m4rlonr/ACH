@@ -11,13 +11,22 @@
           </v-list-item-content>
 
           <!-- Actions -->
-          <v-list-item-action >
-            <Config :item="item"/>
-          </v-list-item-action>
-          <v-list-item-action v-if="typecontrol === true">
-            <Control :item="item"/>
-          </v-list-item-action>
+          <template v-if="typecontrol == true">
+            <v-list-item-action >
+              <SetSala :item="item" />
+            </v-list-item-action>
+            <v-list-item-action>
+              <Control :item="item" />
+            </v-list-item-action>
+          </template>
+          <template v-else>
+            <v-list-item-action>
+              <SetControle :item="item" />
+            </v-list-item-action>
+          </template>
         </v-list-item>
+
+
         <v-divider
           v-if="count < listContent.length - 1"
           :key="count"
@@ -28,8 +37,9 @@
 </template>
 
 <script>
-  import Config from "./config"
   import Control from "./controle"
+  import SetSala from "./setsala"
+  import SetControle from "./setcontrole"
 
   export default {
     props: {
@@ -37,8 +47,9 @@
       typecontrol: Boolean,
     },
     components : {
-      Config,
-      Control
+      SetSala,
+      Control,
+      SetControle
     }
   }
 </script>
