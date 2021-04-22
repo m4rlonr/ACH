@@ -16,11 +16,11 @@
     >
       <v-card>
         <v-card-title class="headline">
-          Configurações de Controle
+          Configurações individuais de controle
         </v-card-title>
 
         <v-card-text>
-          <v-container>
+          <v-container fluid>
             <v-row>
               <v-col>
                 <v-text-field
