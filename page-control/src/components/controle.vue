@@ -23,14 +23,14 @@
         
           <template v-else>
             <h3>Modelos:</h3>
-            <div class="" v-for="item in comandosAres" :key="item.nome"> {{ item.nome }}</div>
+            <div v-for="item in comandosAres" :key="item.nome"> {{ item.nome }}</div>
             <v-divider />
           </template>
         </v-card-text>
 
         <v-card-text v-if="comandosAres.length !== 0" class="d-flex justify-center align-center ">
           <v-btn
-            @click="sendComand(botao.code)"
+            @click="sendComand(botao.code, item)"
             v-for="botao in botoes"
             :key="botao.nome"
             fab
@@ -106,10 +106,11 @@
           })
         }
       },
-      sendComand(code) {
+      sendComand(code, device) {
         // Usar o axios para fazer as requisições
         this.comandosAres.map(item => {
           console.log({
+            ip: device.ipesp,
             command: item.comandos[code],
             length: item.length
           })

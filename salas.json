@@ -3,21 +3,21 @@
       "nome": "a1",
       "id": 0,
       "tipoar": ["springer", "elgin"],
-      "ipesp": "",
+      "ipesp": "192.168.0.15",
       "presence" : false
     },
     {
       "nome": "a2",
       "id": 1,
       "tipoar": ["springer", "samsung"],
-      "ipesp": null,
+      "ipesp": "192.168.0.16",
       "presence" : false
     },
     {
       "nome": "b1",
       "id": 2,
-      "tipoar": [],
-      "ipesp": null,
+      "tipoar": ["samsung"],
+      "ipesp": "192.168.0.17",
       "presence" : false
     },
     {
