@@ -22,28 +22,28 @@
           <p v-if="comandosAres.length === 0">Nenhum arcondicionado cadastrado</p>
         
           <template v-else>
-            <div class="font-weight-medium">Modelos:</div>
-            <div class="font-weight-medium" v-for="item in comandosAres" :key="item.nome"> {{ item.nome }}</div>
+            <h3>Modelos:</h3>
+            <div class="" v-for="item in comandosAres" :key="item.nome"> {{ item.nome }}</div>
             <v-divider />
           </template>
         </v-card-text>
 
-        <v-card-text class="d-flex justify-center align-center">
+        <v-card-text v-if="comandosAres.length !== 0" class="d-flex justify-center align-center ">
           <v-btn
-            v-for="i in 7"
-            :key="i"
-            class="mx-2"
+            @click="sendComand(botao.code)"
+            v-for="botao in botoes"
+            :key="botao.nome"
             fab
-            small
-            color="green darken-1"
+            dark
+            :color="botao.cor"
+            class="ma-1"
           >
-            <v-icon dark>
-              mdi-power
-            </v-icon>
+            {{botao.nome}}
           </v-btn>
         </v-card-text>
         
         <v-card-actions>
+          <v-spacer></v-spacer>
           <v-btn
             color="green darken-1"
             text
@@ -72,6 +72,14 @@
         dialog: false,
         controles: [],
         comandosAres: [],
+        botoes: [
+          {nome: "Power", cor:"red", code: 0},
+          {nome: "22", cor:"green darken-1", code: 1},
+          {nome: "23", cor:"green darken-1", code: 2},
+          {nome: "24", cor:"green darken-1", code: 3},
+          {nome: "25", cor:"green darken-1", code: 4},
+          {nome: "26", cor:"green darken-1", code: 5},
+        ]
       }
     },
     mounted() {
@@ -97,6 +105,15 @@
             })
           })
         }
+      },
+      sendComand(code) {
+        // Usar o axios para fazer as requisições
+        this.comandosAres.map(item => {
+          console.log({
+            command: item.comandos[code],
+            length: item.length
+          })
+        })
       }
     }
   }
