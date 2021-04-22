@@ -12,7 +12,7 @@
       
       <v-dialog
         v-model="dialog"
-        max-width="600"
+        max-width="100%"
       >
         <v-card class="display= block">
           <v-container fluid>
