@@ -16,10 +16,8 @@
 #define MAX_SIZE_BLOCK  16      // Dados RFID
 
 // Credenciais para acesso a rede wifi
-// const char* ssid = "irwin";
-// const char* password = "irwintrena5m";
-const char* ssid = "1704A";
-const char* password = "casa1704a";
+const char* ssid = "irwin";
+const char* password = "irwintrena5m";
 
 AsyncWebServer server(80);
 String command;
