@@ -5,7 +5,7 @@ const axios = require('axios').default;
 var controles = require('./controles.json')
 var salas = require('./salas.json')
 var config = require('./config.json')
-var reservas = nulll
+var reservas = null
 
 // Atualização de horas
 var timeNow = null
@@ -71,7 +71,7 @@ setInterval(() => {
       return
     }
   })
-}, 60000); // 1min
+}, 5000); // 5s
 
 // Função que faz o acionamento do ar
 async function action(sala, acao) {   // Parametro sala vem dados da sala e ação se para ligar ou desligar
@@ -86,11 +86,13 @@ async function action(sala, acao) {   // Parametro sala vem dados da sala e aç�
             length: controle.length,
             code: controle.comandos[1]
           })
+          console.log(`Ativando ${controle.nome}`)
         } else {                        // Comando de desligar
           commands.push({
             length: controle.length,
             code: controle.comandos[0]
           })
+          console.log(`Desativando ${controle.nome}`)
         }
       }
     })
@@ -137,9 +139,9 @@ async function computed(moment, e) {
   if (reservas != null) {
     if (moment == true) {
       if (e == 1) {
-        reservas.map(async reserva => {
+        reservas.map(reserva => {
           if (reserva.mat_aula1 == true) {
-            salas.map(sala => {
+            salas.map(async sala => {
               if (sala.id == reserva.objeto_id) {
                 await action(sala, true)
               }
@@ -147,9 +149,9 @@ async function computed(moment, e) {
           }
         })
       } else if (e == 2) {
-        reservas.map(async reserva => {
+        reservas.map(reserva => {
           if (reserva.vesp_aula1 == true) {
-            salas.map(sala => {
+            salas.map(async sala => {
               if (sala.id == reserva.objeto_id) {
                 await action(sala, true)
               }
@@ -157,9 +159,9 @@ async function computed(moment, e) {
           }
         })
       } else {
-        reservas.map(async reserva => {
+        reservas.map(reserva => {
           if (reserva.not_aula1 == true) {
-            salas.map(sala => {
+            salas.map(async sala => {
               if (sala.id == reserva.objeto_id) {
                 await action(sala, true)
               }
@@ -168,8 +170,8 @@ async function computed(moment, e) {
         })
       }
     } else {
-      reservas.map(async reserva => {
-        salas.map(sala => {
+      reservas.map(reserva => {
+        salas.map(async sala => {
           if (sala.id == reserva.objeto_id) {
             let preseca = await getPresence(sala)
             if (!preseca) await action(sala, false)

@@ -59,6 +59,7 @@
 
 <script>
   import controles from "../../../controles.json"
+  import axios from "axios"
   
   export default {
     props: {
@@ -108,12 +109,13 @@
       },
       sendComand(code, device) {
         // Usar o axios para fazer as requisições
-        this.comandosAres.map(item => {
-          console.log({
-            ip: device.ipesp,
-            command: item.comandos[code],
-            length: item.length
-          })
+        this.comandosAres.map(async item => {
+          await axios.post(`http://${device.ipesp}/emissor?${item.length}=${item.comandos[code]}`)
+          // console.log({
+          //   ip: device.ipesp,
+          //   command: item.comandos[code],
+          //   length: item.length
+          // })
         })
       }
     }
