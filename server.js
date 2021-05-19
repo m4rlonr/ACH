@@ -26,11 +26,11 @@ setInterval(async () => {
         console.log(error)
       }
     })
-  } else if (timeNow == config.end_matutino - 10) {
+  } else if (timeNow == config.init_matutino - 10) {
     computed(true, 1)
-  } else if (timeNow == config.end_vespertino - 10) {
+  } else if (timeNow == config.init_vespertino - 10) {
     computed(true, 2)
-  } else if (timeNow == config.end_noturno - 10) {
+  } else if (timeNow == config.init_noturno - 10) {
     computed(true, 3)
   } else if (timeNow == config.end_matutino + 10) {
     computed(false, null)

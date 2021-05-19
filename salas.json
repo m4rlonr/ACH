@@ -2,22 +2,22 @@
   {
     "nome": "a1",
     "id": 0,
-    "tipoar": ["springer", "elgin"],
-    "ipesp": "192.168.0.15",
+    "tipoar": ["elgin"],
+    "ipesp": "192.168.158.103",
     "presence" : false
   },
   {
     "nome": "a2",
     "id": 1,
-    "tipoar": ["springer", "samsung"],
-    "ipesp": "192.168.0.16",
+    "tipoar": [],
+    "ipesp": "",
     "presence" : false
   },
   {
     "nome": "b1",
     "id": 2,
-    "tipoar": ["samsung"],
-    "ipesp": "192.168.0.17",
+    "tipoar": [],
+    "ipesp": "",
     "presence" : false
   },
   {
