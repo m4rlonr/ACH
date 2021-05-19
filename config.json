@@ -1,0 +1,9 @@
+{
+  "init_matutino": 700,
+  "init_vespertino": 1300,
+  "init_noturno": 1900,
+  "end_matutino" : 1130,
+  "end_vespertino" : 1730,
+  "end_noturno" : 2300,
+  "BASE_POSTGREST": "localhost:3000"
+}

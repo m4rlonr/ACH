@@ -12,7 +12,7 @@
     
     <v-dialog
       v-model="dialog"
-      max-width="500"
+      max-width="80%"
     >
       <v-card>
         <v-card-title class="headline">
@@ -74,7 +74,7 @@
           <v-btn
             color="green darken-1"
             text
-            @click="dialog = false"
+            @click="savefile"
           >
             Salvar
           </v-btn>
@@ -92,6 +92,8 @@
 </template>
 
 <script>
+  import { saveAs } from "file-saver"
+
   export default {
     props: {
       item: {
@@ -104,5 +106,12 @@
         dialog: false,
       }
     },
+    methods: {
+      savefile() {
+        var file = new Blob(["Hello, world!"], {type: "text/json;charset=utf-8"});
+        saveAs(file, `nome.json`);
+        this.dialog = false
+      }
+    }
   }
 </script>
