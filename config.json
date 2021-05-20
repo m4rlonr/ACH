@@ -1,9 +1,22 @@
 {
-  "init_matutino": 700,
-  "init_vespertino": 1300,
-  "init_noturno": 1900,
-  "end_matutino" : 1130,
-  "end_vespertino" : 1730,
-  "end_noturno" : 2300,
+  "mat_aula1": 811,
+  "mat_aula2": 900,
+  "mat_aula3": 1000,
+  "mat_aula4": 1100,
+
+  "ves_aula1": 1330,
+  "ves_aula2": 1430,
+  "ves_aula3": 1530,
+  "ves_aula4": 1818,
+
+  "not_aula1": 1900,
+  "not_aula2": 2000,
+  "not_aula3": 2100,
+  "not_aula4": 2200,
+
+  "end_mat" : 1215,
+  "end_ves" : 1745,
+  "end_not" : 2315,
+
   "BASE_POSTGREST": "localhost:3000"
 }

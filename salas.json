@@ -4,69 +4,79 @@
     "id": 0,
     "tipoar": ["elgin"],
     "ipesp": "192.168.158.103",
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome": "a2",
     "id": 1,
-    "tipoar": [],
-    "ipesp": "",
-    "presence" : false
+    "tipoar": ["elgin"],
+    "ipesp": "192.168.158.103",
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome": "b1",
     "id": 2,
     "tipoar": [],
     "ipesp": "",
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome":"b2",
     "id": 3,
     "tipoar": [],
     "ipesp": null,
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome": "b3",
     "id": 4,
     "tipoar": [],
     "ipesp": null,
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome": "b4",
     "id": 5,
     "tipoar": [],
     "ipesp": null,
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome": "b5",
     "id": 6,
     "tipoar": [],
     "ipesp": null,
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome" :"b6",
     "id": 7,
     "tipoar": [],
     "ipesp": null,
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome": "b7",
     "id": 8,
     "tipoar": [],
     "ipesp": null,
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   },
   {
     "nome": "b8",
     "id": 9,
     "tipoar": [],
     "ipesp": null,
-    "presence" : false
+    "presence" : false,
+    "reservada" : false
   }
 ]
