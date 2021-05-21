@@ -187,8 +187,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -201,8 +201,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -217,8 +217,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -231,8 +231,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -250,8 +250,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -264,8 +264,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -278,8 +278,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -311,8 +311,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -325,8 +325,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -339,8 +339,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
@@ -353,8 +353,8 @@ async function computed(periodo, aula) {    // Função valida dados e chama fun
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = await action(sala, true)
-                  if (response) {
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
                   } else { return }
