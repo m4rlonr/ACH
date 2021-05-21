@@ -1,31 +1,30 @@
-console.log("[INFO] - Aguarde, iniciando...")
-// Importação do axios
 const axios = require('axios').default;
-
-// Variaveis ambienteconsole.log("[INFO] - Buscando impostações")
-var controles = require('./controles.json')
-var salas = require('./salas.json')
-var cfg = require('./config.json')
-// var reservas = null
-var reservas = require('./objeto.json')
-
-// Atualização de horas
-console.log("[INFO] - Obtendo horas")
+var controles = null
+var salas = null
+var cfg = null
 var timeNow = null
-setInterval(() => {
-  if (new Date().getMinutes() < 10) {
+var reservas = null
+
+// Inicio buscando dados
+buscaDados()
+
+reservas = require('./objeto.json')
+
+// FUNÇÕES CONTINUAS
+setInterval(() => {         // Atualização dos dados
+  buscaDados()
+}, 600000);   //10m
+setInterval(() => {         // Atualização de horas
+  if (0 < new Date().getMinutes() && new Date().getMinutes() < 10) {
     timeNow = parseInt(`${new Date().getHours()}0${new Date().getMinutes()}`)
   } else if (new Date().getMinutes() == 0) {
     timeNow = parseInt(`${new Date().getHours()}00`)
   } else {
     timeNow = parseInt(`${new Date().getHours()}${new Date().getMinutes()}`)
   }
-}, 5000);
-
-// Acionamento automatico de ar com base em reservas e desligamento geral
-setInterval(async () => {
-  console.log("[INFO] - Verificando reservas")
-  // Verificando de final de aula para desligar geral
+}, 5000);     //5s
+setInterval(async () => {   // Verificação de horarios 
+  console.log("[INFO] - Verificando horarios")
   if (timeNow == cfg.end_mat + 10 || timeNow == cfg.end_ves + 10 || timeNow == cfg.end_not + 10) {
     console.log("[INFO] - Desligamento geral")
     salas.map(async (sala, indice) => {
@@ -36,24 +35,19 @@ setInterval(async () => {
           salas[indice].reservada = false
         }
       } catch (error) {
-        console.log(error)
+        console.log(`[ERROR] - ${error}`)
       }
     })
-  }
-
-  // Verificando de inicio de aula matutino para acionamento
-  if (timeNow == convertTime(cfg.mat_aula1) - 10) {
+  } else if (timeNow == convertTime(cfg.mat_aula1) - 10) {
     computed(1, 1)
   } else if (timeNow == convertTime(cfg.mat_aula2) - 10) {
     computed(1, 2)
   } else if (timeNow == convertTime(cfg.mat_aula3) - 10) {
+
     computed(1, 3)
   } else if (timeNow == convertTime(cfg.mat_aula4) - 10) {
     computed(1, 4)
-  }
-
-  // Verificando de inicio de aula vespertino para acionamento
-  if (timeNow == convertTime(cfg.ves_aula1) - 10) {
+  } else if (timeNow == convertTime(cfg.ves_aula1) - 10) {
     computed(2, 1)
   } else if (timeNow == convertTime(cfg.ves_aula2) - 10) {
     computed(2, 2)
@@ -61,10 +55,7 @@ setInterval(async () => {
     computed(2, 3)
   } else if (timeNow == convertTime(cfg.ves_aula4) - 10) {
     computed(2, 4)
-  }
-
-  // Verificando de inicio de aula noturno para acionamento
-  if (timeNow == convertTime(cfg.not_aula1) - 10) {
+  } else if (timeNow == convertTime(cfg.not_aula1) - 10) {
     computed(3, 1)
   } else if (timeNow == convertTime(cfg.not_aula2) - 10) {
     computed(3, 2)
@@ -72,55 +63,41 @@ setInterval(async () => {
     computed(3, 3)
   } else if (timeNow == convertTime(cfg.not_aula4) - 10) {
     computed(3, 4)
-  }
-}, 15000); // 15 sec
-
-// Acionamento de ar com base em presença
-setInterval(() => {
+  } else { return }
+}, 15000);    //15s
+setInterval(() => {         // Verificando presença e acionando
   salas.map(async (sala, indice) => {
     if (sala.reservada == false) {
-      if (sala.tipoar.length != 0) {          // Se tiver ar condicionado na sala
-        if (sala.ipesp != null) {             // Se tiver um endereço pro ESP
+      if (sala.tipoar.length != 0) {                // Se tiver ar condicionado na sala
+        if (sala.ipesp != null) {                   // Se tiver um endereço pro ESP
           try {
             let preseca = await getPresence(sala)
-            if (preseca == true) {            // Se detectar presença
-              if (sala.presence == false) {     // Se for uma nova presença aciona
+            if (preseca == true) {                  // Se detectar presença
+              if (sala.presence == false) {         // Se for uma nova presença aciona
                 let response = action(sala, true)
-                if (response) {
-                  salas[indice].presence =
-                    salas[indice].reservada = true
-                  await posInit(sala, indice)
-                }
-                console.log(`[INFO] - Nova presença ${sala.nome}`)
-              } else {                           // Se não for uma nova presença retorna
-                return
-              }
+                if (response) salas[indice].presence = true
+                console.log(`[INFO] - Nova presença sala ${sala.nome}`)
+              } else { return }
             } else {
-              if (sala.presence == true) {       // Se for detectado uma nova ausencia desliga
+              if (sala.presence == true) {          // Se for detectado uma nova ausencia desliga
                 let response = action(sala, false)
                 if (response) salas[indice].presence = false
-                console.log(`[INFO] - Nova ausencia ${sala.nome}`)
-              } else {                            // Se não for uma nova ausencia retorna
-                return
-              }
+                console.log(`[INFO] - Nova ausencia sala ${sala.nome}`)
+              } else { return }
             }
           } catch (error) {
-            console.log(`ERRO - Erro na verificação de presença sala ${sala.nome}`)
+            console.log(`ERRO -${error}`)
           }
-        }
-      } else {
-        return
-      }
-    } else {
-      return
-    }
+        } else { return }
+      } else { return }
+    } else { return }
   })
-}, 5000); // 5s
+}, 5000);     //5s
 
-// Função que faz o acionamento do ar
+// FUNÇÕES DE AÇÃO
 async function action(sala, acao) {   // Parametro sala vem dados da sala e ação se para ligar ou desligar
   let commands = [];                  // Lista de comandos a serem executados
-
+  console.log("[INFO] - Criando comandos")
   // Criando comandos
   sala.tipoar.map(tipo => {
     controles.map(controle => {
@@ -130,59 +107,76 @@ async function action(sala, acao) {   // Parametro sala vem dados da sala e aç�
             length: controle.length,
             code: controle.comandos[1]
           })
-          console.log(`[INFO] - Ativando ${controle.nome}`)
+          console.log("[INFO] - Comando de ligamento criado")
         } else {                        // Comando de desligar
           commands.push({
             length: controle.length,
             code: controle.comandos[0]
           })
-          console.log(`[INFO] - Desativando ar ${controle.nome}`)
         }
+        console.log("[INFO] - Comando de desligamento criado")
+      } else {
+        return
       }
     })
   })
 
-  // Executando comandos
+  console.log("[INFO] - Execultando comandos")
   commands.map(async (command) => {
     try {
       await axios.post(`http://${sala.ipesp}/emissor?${command.length}=${command.code}`)
-      console.log("[INFO} - Comando enviado")
       return true
     } catch (error) {
-      console.log(`ERRO - Não possível enviar comando para IP${sala.ipesp}`);
+      console.log(`[ERRO] - Não possível enviar comando para IP ${sala.nome}`);
       return false
     }
   })
 }
-
-// Função que faz requisição de presenca
-async function getPresence(sala) {
+async function getPresence(sala) {    // Função que faz requisição de presenca
   console.log("[INFO] - Buscando presença")
   try {
-    const { data } = await axios.get('http://' + sala.ipesp + '/presence')
+    var { data } = await axios.get('http://' + sala.ipesp + '/presence')
     return data
   } catch (error) {
-    console.log(`ERROR - Requisição de presensa ${sala.nome}`);
+    console.log(`[ERROR] - ${error}`);
     return null
   }
 }
-
-// Função que faz requisições de reservas
-async function getReservas() {
+async function getReservas() {        // Função que faz requisições de reservas
   console.log("[INFO] - Buscando dados de reservas")
   let today = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDay()}`
   try {
     const { data } = await axios.get(`http://${config.BASE_POSTGREST}/reserva?data_reserva=eq.${today}`)
     return data
   } catch (error) {
-    console.log(`ERRO - Requisição de reservas feita sem sucesso`)
+    console.log(`[ERRO] - ${error}`)
     return null
   }
 }
+function convertTime(time) {          // Conversão de horas
+  let result = time - (new Date().getHours() * 100)
+  if (100 < result || result < 10) {
+    return time - 40
+  } else if (result == 0) {
+    return time - 40
+  } else {
+    return time
+  }
+}
+function buscaDados() {               // Função que faz busca de dados
+  try {
+    controles = require('./controles.json')
+    salas = require('./salas.json')
+    cfg = require('./config.json')
+    console.log('[INFO] - Dados obtidos de ambiente')
+  } catch (error) {
+    console.log(`[ERRO] - ${error}`)
+  }
+}
 
-// Função valida dados e chama função de acionamento
-async function computed(periodo, aula) {
-  console.log("[INFO] - Validando dados de reservas e acionando")
+//FUNÇÕES DE MANIPULAÇÃO E VALIDAÇÃO
+async function computed(periodo, aula) {    // Função valida dados e chama função de acionamento
+  console.log("[INFO] - Consultando reservas")
   // reservas = await getReservas()
   if (reservas != null) {
     if (periodo == 1) {
@@ -195,12 +189,11 @@ async function computed(periodo, aula) {
                 if (sala.presence == false) {
                   let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         } else if (aula == 2) {
@@ -210,13 +203,14 @@ async function computed(periodo, aula) {
                 if (sala.presence == false) {
                   let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
+          } else {
+            return
           }
         } else if (aula == 3) {
           if (list_aulas[2] == true) {
@@ -225,12 +219,11 @@ async function computed(periodo, aula) {
                 if (sala.presence == false) {
                   let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         } else if (aula == 4) {
@@ -240,12 +233,11 @@ async function computed(periodo, aula) {
                 if (sala.presence == false) {
                   let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         }
@@ -258,14 +250,13 @@ async function computed(periodo, aula) {
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = action(sala, true)
+                  let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         } else if (aula == 2) {
@@ -273,14 +264,13 @@ async function computed(periodo, aula) {
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = action(sala, true)
+                  let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         } else if (aula == 3) {
@@ -288,14 +278,13 @@ async function computed(periodo, aula) {
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = action(sala, true)
+                  let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         } else if (aula == 4) {
@@ -303,14 +292,13 @@ async function computed(periodo, aula) {
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = action(sala, true)
-                  if (response) {
-                    salas[indice].presence = true
+                  if (sala.reservada == false) {
+                    await action(sala, true)
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         }
@@ -323,14 +311,13 @@ async function computed(periodo, aula) {
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = action(sala, true)
+                  let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         } else if (aula == 2) {
@@ -338,14 +325,13 @@ async function computed(periodo, aula) {
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = action(sala, true)
+                  let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         } else if (aula == 3) {
@@ -353,14 +339,13 @@ async function computed(periodo, aula) {
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = action(sala, true)
+                  let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         } else if (aula == 4) {
@@ -368,14 +353,13 @@ async function computed(periodo, aula) {
             salas.map(async (sala, indice) => {
               if (sala.id == reserva.objeto_id) {
                 if (sala.presence == false) {
-                  let response = action(sala, true)
+                  let response = await action(sala, true)
                   if (response) {
-                    salas[indice].presence = true
                     salas[indice].reservada = true
                     await posInit(sala, indice)
-                  }
-                }
-              }
+                  } else { return }
+                } else { return }
+              } else { return }
             })
           }
         }
@@ -387,33 +371,23 @@ async function computed(periodo, aula) {
     return
   }
 }
-
-// Conversão de horas
-function convertTime(time) {
-  let result = time - (new Date().getHours() * 100)
-  if (result < 10) {
-    return time - 40
-  } else if (result == 0) {
-    return time - 40
-  } else if (result > 100) {
-    return time - 40
-  } else {
-    return time
-  }
-}
-
-async function posInit(sala, indice) {
+async function posInit(sala, indice) {      // Função de agendamento de busca de presença e desligamento
   setTimeout(async () => {
+    console.log("[INFO] - Busca de presença agendada")
     let resposta = await getPresence(sala)
     if (resposta == false) {
       try {
         await action(sala, false)
         salas[indice].reservada = false
+        console.log("[INFO] - Sem presença")
       } catch (error) {
-        console.log(error)
+        console.log(`[ERRO] - ${error}`)
       }
     } else {
+      salas[indice].reservada = false
+      salas[indice].presence = true
+      console.log("[INFO] - Com presença")
       return
     }
-  }, 1200000);
+  }, 45000);
 }

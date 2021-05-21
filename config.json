@@ -1,13 +1,15 @@
 {
-  "mat_aula1": 811,
+  "mat_aula1": 800,
   "mat_aula2": 900,
   "mat_aula3": 1000,
   "mat_aula4": 1100,
-
+  
   "ves_aula1": 1330,
   "ves_aula2": 1430,
   "ves_aula3": 1530,
-  "ves_aula4": 1818,
+
+
+  "ves_aula4": 1752,
 
   "not_aula1": 1900,
   "not_aula2": 2000,

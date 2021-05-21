@@ -10,8 +10,8 @@
   {
     "nome": "a2",
     "id": 1,
-    "tipoar": ["elgin"],
-    "ipesp": "192.168.158.103",
+    "tipoar": [],
+    "ipesp": "",
     "presence" : false,
     "reservada" : false
   },
