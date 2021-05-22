@@ -7,8 +7,6 @@
   "ves_aula1": 1330,
   "ves_aula2": 1430,
   "ves_aula3": 1530,
-
-
   "ves_aula4": 1752,
 
   "not_aula1": 1900,
@@ -19,6 +17,12 @@
   "end_mat" : 1215,
   "end_ves" : 1745,
   "end_not" : 2315,
+
+  "verifica_presenca": 30000,
+  "verifica_horarios": 35000,
+  "atualiza_dados": 600000,
+  "atualiza_horas": 30000,
+  "verifica_preseca_agendada": 1200000,
 
   "BASE_POSTGREST": "localhost:3000"
 }

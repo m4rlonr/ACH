@@ -8,12 +8,10 @@ var reservas = null
 // Inicio buscando dados
 buscaDados()
 
-reservas = require('./objeto.json')
-
 // FUNÇÕES CONTINUAS
 setInterval(() => {         // Atualização dos dados
   buscaDados()
-}, 600000);   //10m
+}, cfg.atualiza_dados);
 setInterval(() => {         // Atualização de horas
   if (0 < new Date().getMinutes() && new Date().getMinutes() < 10) {
     timeNow = parseInt(`${new Date().getHours()}0${new Date().getMinutes()}`)
@@ -22,7 +20,7 @@ setInterval(() => {         // Atualização de horas
   } else {
     timeNow = parseInt(`${new Date().getHours()}${new Date().getMinutes()}`)
   }
-}, 5000);     //5s
+}, cfg.atualiza_horas);
 setInterval(async () => {   // Verificação de horarios 
   console.log("[INFO] - Verificando horarios")
   if (timeNow == cfg.end_mat + 10 || timeNow == cfg.end_ves + 10 || timeNow == cfg.end_not + 10) {
@@ -64,7 +62,7 @@ setInterval(async () => {   // Verificação de horarios
   } else if (timeNow == convertTime(cfg.not_aula4) - 10) {
     computed(3, 4)
   } else { return }
-}, 15000);    //15s
+}, cfg.verifica_horarios);
 setInterval(() => {         // Verificando presença e acionando
   salas.map(async (sala, indice) => {
     if (sala.reservada == false) {
@@ -92,7 +90,7 @@ setInterval(() => {         // Verificando presença e acionando
       } else { return }
     } else { return }
   })
-}, 5000);     //5s
+}, cfg.verifica_presenca);
 
 // FUNÇÕES DE AÇÃO
 async function action(sala, acao) {   // Parametro sala vem dados da sala e ação se para ligar ou desligar
@@ -146,8 +144,9 @@ async function getReservas() {        // Função que faz requisições de reser
   console.log("[INFO] - Buscando dados de reservas")
   let today = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDay()}`
   try {
-    const { data } = await axios.get(`http://${config.BASE_POSTGREST}/reserva?data_reserva=eq.${today}`)
-    return data
+    // const { data } = await axios.get(`http://${cfg.BASE_POSTGREST}/reserva?data_reserva=eq.${today}`)
+    // return data
+    return require('./objeto.json')   // Apagar para funcionamento com postgrest funcionando
   } catch (error) {
     console.log(`[ERRO] - ${error}`)
     return null
@@ -177,7 +176,7 @@ function buscaDados() {               // Função que faz busca de dados
 //FUNÇÕES DE MANIPULAÇÃO E VALIDAÇÃO
 async function computed(periodo, aula) {    // Função valida dados e chama função de acionamento
   console.log("[INFO] - Consultando reservas")
-  // reservas = await getReservas()
+  reservas = await getReservas()
   if (reservas != null) {
     if (periodo == 1) {
       reservas.map(reserva => {
@@ -389,5 +388,5 @@ async function posInit(sala, indice) {      // Função de agendamento de busca 
       console.log("[INFO] - Com presença")
       return
     }
-  }, 45000);
+  }, cfg.verifica_preseca_agendada);
 }
