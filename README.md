@@ -15,3 +15,6 @@ Ainda em testes, protótipo funcional porém ainda necessário melhorias na elet
 
 ## Certificado de registro
 Em conjunto com o órgão NIT o certificado de registro do software com o número de processo: BR512021002275-0 está em anexo.
+
+## Uso
+Para utilizar o software é necessário o uso de um software que é propriedade da UNEMAT, o sistema de reservas, onde há dados das reservas das salas, ou seja, sem o sistema de reservas esse sistema de automação deve ser reescrito, atualmente servindo apenas de documentação.
